@@ -1,6 +1,5 @@
 use anyhow::{bail, Context, Result};
 use clap::ArgMatches;
-use plist::{Integer, Value};
 
 fn convert_version_string_to_number(version_string: &str) -> Result<i64> {
     let parts: Vec<&str> = version_string.split('.').collect();
@@ -33,25 +32,17 @@ pub fn sanitize_au_version(matches: &ArgMatches) -> Result<()> {
 
     println!("{}", input);
 
-    if !input.ends_with(".component") {
-        bail!("Expecting an AudioUnit component with extension .component");
+    if !input.ends_with(".plist") {
+        bail!("Expecting a plist file with extension .plist");
     }
 
     let path = std::path::Path::new(input);
 
-    if !path.is_dir() {
-        bail!("Expecting a directory");
+    if !path.is_file() {
+        bail!("Expecting a file");
     }
 
-    let plist_path = path.join("Contents").join("Info.plist");
-    if !plist_path.is_file() {
-        bail!(
-            "No plist found at {:?}. Is this a valid AudioUnit?",
-            plist_path
-        );
-    }
-
-    if let Ok(mut plist) = plist::Value::from_file(plist_path.clone()) {
+    if let Ok(mut plist) = plist::Value::from_file(path.clone()) {
         let plist_dict = plist.as_dictionary_mut().context("expected a dictionary")?;
 
         let version_string = plist_dict
@@ -93,7 +84,7 @@ pub fn sanitize_au_version(matches: &ArgMatches) -> Result<()> {
             println!("Updated component version number: {}", new_version_number);
         }
 
-        plist.to_file_xml(plist_path)?;
+        plist.to_file_xml(path)?;
     }
 
     Ok(())

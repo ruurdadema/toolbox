@@ -1,5 +1,5 @@
-use anyhow::{bail, Context, Result};
-use clap::{App, Arg, ArgMatches};
+use anyhow::{Result};
+use clap::{App, Arg};
 use pkg_version::*;
 
 mod sanitize_au_version;
