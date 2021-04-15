@@ -28,7 +28,7 @@ fn convert_version_string_to_number(version_string: &str) -> Result<i64> {
 }
 
 pub fn sanitize_au_version(matches: &ArgMatches) -> Result<()> {
-    let input = matches.value_of("INPUT").unwrap();
+    let input = matches.value_of("INPUT").context("Expected an input file")?;
 
     println!("Sanitize AU version in plist at: {}", input);
 
