@@ -1,0 +1,13 @@
+[package]
+name = "plugin-tools"
+version = "0.1.0"
+authors = ["Ruurd Adema <ruurd@owllab.nl>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "3.0.0-beta.2"
+pkg-version = "1.0.0"
+anyhow = "1.0.40"
+plist = "1.1.0"
