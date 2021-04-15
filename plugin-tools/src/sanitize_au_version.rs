@@ -30,7 +30,7 @@ fn convert_version_string_to_number(version_string: &str) -> Result<i64> {
 pub fn sanitize_au_version(matches: &ArgMatches) -> Result<()> {
     let input = matches.value_of("INPUT").unwrap();
 
-    println!("{}", input);
+    println!("Sanitize AU version in plist at: {}", input);
 
     if !input.ends_with(".plist") {
         bail!("Expecting a plist file with extension .plist");
